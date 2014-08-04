@@ -2,27 +2,26 @@
 <html ng-app='feedModule'>
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.15/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-sanitize.js"></script>
-  <script src="js/feeds.js"></script>
+  <script src="js/project.js"></script>
+
+   <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 </head>
 <body>
   <div ng-controller='FeedController as feedCtrl'>
-    <form name="zipCodeForm" ng-submit="feedCtrl.zipCodeSubmit()">
-      <input ng-model="feedCtrl.zipCode" type="number" min="10000" max="99999" required = "required" placeholder="Enter zip code" title="zip code" class='zipcode'/>
-      <input type="submit" value="Submit Zip Code" />
-    </form>
-    <!-- {{feeds }} -->
-    <div ng-repeat="feed in feeds | orderBy:'title'">
-    <h2><a href="{{feed.link}}" target="_blank">{{feed.title}}</a></h2>
-    <div ng-repeat="item in feed.entries">
-    <h3>{{item.title}}</h3>
-    <span ng-bind-html="item.content"></span><br/>
-    <span>--</span><br/>
-      <!-- <a href="{{item.link}}" target="_blank">{{item.title}}</a> (<span>{{item.publishedDate | date:'d-MM-yyyy HH:mm'}}</span>)<br /> -->
+    <div>{{status}}</div>
+<!--
+    <div ng-repeat="location in feed.arrivals">
+      <div ng-repeat = "arrival in location | orderBy:''scheduled'">
+          <div>{{arrival.route}} - {{arrival.fullSign}}</div>
+      </div>
     </div>
-  </div>
+    -->
   </div>
 </body>
 </html>

@@ -16,4 +16,10 @@ angular.module('feedModule', [])
     $scope.feed = data;
   });
 
+  $scope.getMinutes = function(arrivaldate){
+    diff = new Date() - arrivaldate;
+    millisdiff = Math.abs(diff);
+    return Math.round( millisdiff / 60000 );
+  }
+
 });

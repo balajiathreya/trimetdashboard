@@ -21,17 +21,17 @@
     <div ng-repeat="(locID,arrivals) in feed.arrivals" class='row'>      
       <div class='col-md-4'>
         <div ng-repeat = "arrival in arrivals | orderBy:'scheduled'">
-          <h3 ng-if="$index == 0">{{locID}}</h3>
+          <h3 ng-if="$index == 0">{{locID}}</h3>          
           <span ng-switch on="arrival.status">
-		<!-- {{arrival.estimated  | date:'MMM d, hh:mma'}} -->
-            <span ng-switch-when="estimated">At {{arrival.estimated  | date:'hh:mma'}}, (estimated) : </span>
-            <span ng-switch-when="scheduled">At {{arrival.scheduled  | date:'hh:mma'}}, (scheduled) : </span>
+    <!-- {{arrival.estimated  | date:'MMM d, hh:mma'}} -->
+            <span ng-switch-when="estimated">In {{getMinutes(arrival.estimated)}} minutes, (estimated) : </span>
+            <span ng-switch-when="scheduled">In {{getMinutes(arrival.scheduled)}} minutes, (scheduled) : </span>
             <span ng-switch-default class='alert-warning' role='alert'>Alert: {{arrival.status}} : {{arrival.reason}}</span>
           </span>
           <span class="text-success">{{arrival.fullSign}}</span>
           <span class="alert-warning" role="alert" ng-if='arrival.detoured'>Detoured</span>
           <span class="alert-warning" role="alert" ng-if='arrival.inCongestion'>Congestion</span>
-        </div>        
+          </div>          
       </div>
     </div>
   </div>

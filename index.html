@@ -1,23 +1,39 @@
 <!doctype html>
 <html ng-app='feedModule'>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.15/angular.min.js"></script>
   <script src="js/project.js"></script>
 
 
 </head>
 <body>
-  <div ng-controller='FeedController as feedCtrl'>
-    <div>{{status}}</div>
-    
-    {{feed}}
-<!--
-    <div ng-repeat="location in feed.arrivals">
-      <div ng-repeat = "arrival in location | orderBy:''scheduled'">
-          <div>{{arrival.route}} - {{arrival.fullSign}}</div>
+<img src="http://i.imgur.com/8hjXUfS.gif?1" alt="Trimet" class="img-rounded">
+
+  <div ng-controller='FeedController as feedCtrl' class="container">    
+    <div ng-repeat="(locID,arrivals) in feed.arrivals" class='row'>      
+      <div class='col-md-4'>
+        <div ng-repeat = "arrival in arrivals | orderBy:'scheduled'">
+          <h3 ng-if="$index == 0">{{locID}}</h3>
+          <span ng-switch on="arrival.status">
+            <span ng-switch-when="estimated">{{arrival.estimated  | date:'h:mma'}}</span>
+            <span ng-switch-when="scheduled">{{arrival.scheduled  | date:'h:mma'}}</span>
+            <span ng-switch-default>Alert: {{arrival.status}} : {{arrival.reason}}</span>
+          </span>
+          <span>{{arrival.fullSign}}</span>
+          <span class="alert-warning" role="alert" ng-if='arrival.detoured'>Detoured</span>
+          <span class="alert-warning" role="alert" ng-if='arrival.inCongestion'>Congestion</span>
+        </div>        
       </div>
     </div>
-    -->
   </div>
 </body>
 </html>

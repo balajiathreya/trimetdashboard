@@ -15,4 +15,5 @@ angular.module('feedModule', [])
     $scope.status = "Status : No data. Server returned response status: " + status;
     $scope.feed = data;
   });
+
 });

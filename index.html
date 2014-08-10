@@ -13,13 +13,18 @@
 <script src="js/project.js"></script>
 
 <style type='text/css'>
-.alert-warning{cursor:pointer};
+.showDetour{
+   cursor:pointer;
+   text-decoration:underline;
+   margin-top:20px;
+}
 </style>
 </head>
 <body>
 <img src="http://i.imgur.com/8hjXUfS.gif?1" alt="Trimet" class="img-rounded">
-
   <div ng-controller='FeedController as feedCtrl' class="container">    
+    
+    <div ng-click=toggleShowDetour() class='showDetour'>Show Detour Info</div>
     <div ng-repeat="(locID,arrivals) in feed.arrivals" class='row'>      
       <div class='col-md-4'>
         <div ng-repeat = "arrival in arrivals | orderBy:'scheduled'">
@@ -31,7 +36,7 @@
             <span ng-switch-default class='alert-warning' role='alert'>Alert: {{arrival.status}} : {{arrival.reason}}</span>
           </span>
           <span class="text-success">{{arrival.fullSign}}</span>
-          <span class="alert-warning" role="alert" ng-if='arrival.detoured' ng-click=toggleShowDetour()>Detoured: <span ng-show=showDetour>{{getDetourInfo(arrival.detour,feed.detours)}}</span></span>
+          <span class="alert-warning" role="alert" ng-if='arrival.detoured'>Detoured: <span ng-show=showDetour>{{getDetourInfo(arrival.detour,feed.detours)}}</span></span>
           <span class="alert-warning" role="alert" ng-if='arrival.inCongestion'>Congestion</span>
           </div>          
       </div>

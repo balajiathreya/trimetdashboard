@@ -3,20 +3,22 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <!-- Optional theme -->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.15/angular.min.js"></script>
 <script src="js/project.js"></script>
 
 <style type='text/css'>
 .showDetour{
    cursor:pointer;
-   text-decoration:underline;
-   margin-top:20px;
+}
+.detourInfo{
+  font-size: 12px;
+  color:#8A6D43;
 }
 </style>
 </head>
@@ -24,7 +26,6 @@
 <img src="http://i.imgur.com/8hjXUfS.gif?1" alt="Trimet" class="img-rounded">
   <div ng-controller='FeedController as feedCtrl' class="container">    
     
-    <div ng-click=toggleShowDetour() class='showDetour'>Show Detour Info</div>
     <div ng-repeat="(locID,arrivals) in feed.arrivals" class='row'>      
       <div class='col-md-4'>
         <div ng-repeat = "arrival in arrivals | orderBy:'scheduled'">
@@ -35,9 +36,14 @@
             <span ng-switch-when="scheduled">In {{getMinutes(arrival.scheduled)}} minutes, (scheduled) : </span>
             <span ng-switch-default class='alert-warning' role='alert'>Alert: {{arrival.status}} : {{arrival.reason}}</span>
           </span>
-          <span class="text-success">{{arrival.fullSign}}</span>
-          <span class="alert-warning" role="alert" ng-if='arrival.detoured'>Detoured: <span ng-show=showDetour>{{getDetourInfo(arrival.detour,feed.detours)}}</span></span>
-          <span class="alert-warning" role="alert" ng-if='arrival.inCongestion'>Congestion</span>
+          <span class="text-success">{{arrival.fullSign}}&nbsp;&nbsp;</span>
+          <span ng-if='arrival.detoured'>
+            <span class="alert-warning showDetour" role="alert" ng-click='arrival.showDetour=!arrival.showDetour'>Detoured: </span>
+            <span ng-show='arrival.showDetour' class='detourInfo'>&nbsp;&nbsp;{{getDetourInfo(arrival.detour,feed.detours)}}</span>
+          </span>
+          <span ng-if='arrival.inCongestion'>
+            <span class="alert-warning" role="alert">Congestion</span>
+          </span>          
           </div>          
       </div>
     </div>

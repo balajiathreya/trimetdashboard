@@ -23,11 +23,34 @@
 <body>
 <img src="http://i.imgur.com/8hjXUfS.gif?1" alt="Trimet" class="img-rounded">
   <div ng-controller='FeedController as feedCtrl' class="container">    
+
+    <h2>Nearby</h2>
+      <div ng-repeat="(locID,arrivals) in nearbyStops.arrivals" class='row'>
+        <div class='col-md-4'>
+          <div ng-repeat = "arrival in arrivals | orderBy:'scheduled'">
+            <h3 ng-if="$index == 0">{{locID}} : {{nearbyStops.locations[locID]}}</h3>
+          <span ng-switch on="arrival.status">
+    <!-- {{arrival.estimated  | date:'MMM d, hh:mma'}} -->
+            <span ng-switch-when="estimated">In {{getMinutes(arrival.estimated)}} minutes, (estimated) : </span>
+            <span ng-switch-when="scheduled">In {{getMinutes(arrival.scheduled)}} minutes, (scheduled) : </span>
+            <span ng-switch-default class='alert-warning' role='alert'>Alert: {{arrival.status}} : {{arrival.reason}}</span>
+          </span>
+          <span class="text-success">{{arrival.fullSign}}&nbsp;&nbsp;</span>
+          <span ng-if='arrival.detoured'>
+            <span class="alert-warning showDetour" role="alert">Detoured</span>
+          </span>
+          <span ng-if='arrival.inCongestion'>
+            <span class="alert-warning" role="alert">Congestion</span>
+          </span>
+          </div>
+      </div>
+    </div>
+
     <h2>Favorites</h2> 
-    <div ng-repeat="(locID,arrivals) in feed.arrivals" class='row'>      
+    <div ng-repeat="(locID,arrivals) in favStops.arrivals" class='row'>      
       <div class='col-md-4'>
         <div ng-repeat = "arrival in arrivals | orderBy:'scheduled'">
-          <h3 ng-if="$index == 0">{{locID}} : {{feed.locations[locID]}}</h3>          
+          <h3 ng-if="$index == 0">{{locID}} : {{favStops.locations[locID]}}</h3>          
           <span ng-switch on="arrival.status">
     <!-- {{arrival.estimated  | date:'MMM d, hh:mma'}} -->
             <span ng-switch-when="estimated">In {{getMinutes(arrival.estimated)}} minutes, (estimated) : </span>

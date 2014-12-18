@@ -1,11 +1,12 @@
 
 
 angular.module('feedModule', [])
-.controller('FeedController', function ($scope, $http, geolocation) {
+.controller('FeedController', function ($scope, $http) {
   $scope.favStops = {};
   $scope.nearbyStops = {};
   $scope.favStopsStatus = '';
   $scope.nearbyStopsStatus = '';
+/*
   coords = geolocation.getLocation().then(function(data){
       return {lat:data.coords.latitude, long:data.coords.longitude};
   });
@@ -30,7 +31,7 @@ angular.module('feedModule', [])
     $scope.nearbyStops = data;
   });
 
-
+*/
 
   // favorite locations 
   var favLocsResponsePromise = $http.get("http://trimethelper.balajiathreya.com/getfavoritelocs", { 

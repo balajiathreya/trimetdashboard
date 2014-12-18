@@ -4,9 +4,13 @@ angular.module('feedModule', [])
 .controller('FeedController', function ($scope, $http) {
   $scope.feed = {};
   $scope.status = '';
-  var responsePromise = $http.get("http://trimethelper.balajiathreya.com/getdashboard");
+  var favLocsResponsePromise = $http.get("http://trimethelper.balajiathreya.com/getfavoritelocs", { 
+					params : { 
+						"locids" : "1003,1114,9978,10168,9833,9834,8381,9818"
+					 }
+				 });
 
-  responsePromise.success(function(data, status, headers, config) {
+  favLocsResponsePromise.success(function(data, status, headers, config) {
     $scope.status = 'Status : Success';
     $scope.feed = data;
     for(i in $scope.feed.arrivals){
@@ -14,7 +18,7 @@ angular.module('feedModule', [])
     }
   });
 
-  responsePromise.error(function(data, status, headers, config) {
+  favLocsResponsePromise.error(function(data, status, headers, config) {
     $scope.status = "Status : No data. Server returned response status: " + status;
     $scope.feed = data;
   });

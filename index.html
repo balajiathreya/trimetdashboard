@@ -22,7 +22,7 @@
 <body>
 <img src="http://i.imgur.com/8hjXUfS.gif?1" alt="Trimet" class="img-rounded">
   <div ng-controller='FeedController as feedCtrl' class="container">    
- 
+    <h2>Favorites</h2> 
     <div ng-repeat="(locID,arrivals) in feed.arrivals" class='row'>      
       <div class='col-md-4'>
         <div ng-repeat = "arrival in arrivals | orderBy:'scheduled'">

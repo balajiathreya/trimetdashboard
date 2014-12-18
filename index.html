@@ -13,9 +13,6 @@
 <script src="js/project.js"></script>
 
 <style type='text/css'>
-.showDetour{
-   cursor:pointer;
-}
 .detourInfo{
   font-size: 12px;
   color:#8A6D43;
@@ -25,7 +22,7 @@
 <body>
 <img src="http://i.imgur.com/8hjXUfS.gif?1" alt="Trimet" class="img-rounded">
   <div ng-controller='FeedController as feedCtrl' class="container">    
-    
+ 
     <div ng-repeat="(locID,arrivals) in feed.arrivals" class='row'>      
       <div class='col-md-4'>
         <div ng-repeat = "arrival in arrivals | orderBy:'scheduled'">
@@ -38,8 +35,7 @@
           </span>
           <span class="text-success">{{arrival.fullSign}}&nbsp;&nbsp;</span>
           <span ng-if='arrival.detoured'>
-            <span class="alert-warning showDetour" role="alert" ng-click='arrival.showDetour=!arrival.showDetour'>Detoured: </span>
-            <span ng-show='arrival.showDetour' class='detourInfo'>&nbsp;&nbsp;{{getDetourInfo(arrival.detour,feed.detours)}}</span>
+            <span class="alert-warning showDetour" role="alert">Detoured</span>
           </span>
           <span ng-if='arrival.inCongestion'>
             <span class="alert-warning" role="alert">Congestion</span>

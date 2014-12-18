@@ -25,9 +25,4 @@ angular.module('feedModule', [])
     return Math.round( millisdiff / 60000 );
   };
   
-   $scope.getDetourInfo = function(detour, detours){
-    id = detour[0];
-    return detours[id];
-  };
-
 });

@@ -6,13 +6,23 @@ angular.module('feedModule', [])
 
   $scope.favLocIDs = "1003,1114,9978,10168,9833,9834,8381,9818";
   $scope.nearbyLocIDS = '';
+ // $scope.tab = 1;
 
   getGeoLocation($scope.lon, $scope.lat);
   getFavLocIDsRoutes($scope.favLocIDs);
 
+
+  $scope.setTab = function (tabId) {
+     $scope.tab = tabId;
+  };
+
+  $scope.isSetTab = function (tabId) {
+     return $scope.tab === tabId;
+  };
 // getRoutes(getNearbyLocIDs(),$scope.nearbyStopsStatus, $scope.nearbyStops);
    
   function getGeoLocation() {
+     $scope.tab = 1;
      if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
                 lat = position.coords.latitude;
@@ -29,18 +39,8 @@ angular.module('feedModule', [])
                                                 "ll" : lon+","+lat
                                          }
                                  });
-/*
-      nearbyStopsResponsePromise.success(function(data, status, headers, config) {
-          $scope.nearbyStops = data;
-          $scope.nearbyLocIDs = getNearbyLocIDs().join();
-	  getNearbyLocIDsRoutes($scope.nearbyLocIDs);
-      });
 
-      nearbyStopsResponsePromise.error(function(data, status, headers, config) {
-          $scope.nearbyStops = data;
-      });
-*/
-	responsePromise.success(function(data, status, headers, config) {
+       responsePromise.success(function(data, status, headers, config) {
            $scope.nearbyStops = data;
            for(i in $scope.nearbyStops.arrivals) {
               $scope.nearbyStops.arrivals[i].showDetour = true;
@@ -82,29 +82,6 @@ angular.module('feedModule', [])
            $scope.favStops = data;
        });
    }
-
-
-  function getNearbyLocIDsRoutes(locids) {
-      var responsePromise = $http.get("http://trimethelper.balajiathreya.com/getnearbystops", {
-                                        params : {
-                                                "locids" : locids
-                                         }
-                                 });
-
-       responsePromise.success(function(data, status, headers, config) {
-           $scope.nearbyStops = data;
-           for(i in $scope.nearbyStops.arrivals) {
-              $scope.nearbyStops.arrivals[i].showDetour = true;
-           }
-       });
-
-       responsePromise.error(function(data, status, headers, config) {
-           console.log('error: ' + data + " status: " + status);
-           $scope.nearbyStops = data;
-       });
-  }
-
-
 
 
   $scope.getMinutes = function(arrivaldate){

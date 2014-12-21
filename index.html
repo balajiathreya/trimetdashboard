@@ -23,10 +23,16 @@
 <img src="http://i.imgur.com/8hjXUfS.gif?1" alt="Trimet" class="img-rounded">
   <div ng-controller='FeedController as feedCtrl' class="container">    
 
-   <h2>Nearby</h2>
-    <div ng-repeat="(locID,arrivals) in nearbyStops.arrivals" class='row'>
-      <div class='col-md-4'>
-        <div ng-repeat = "arrival in arrivals | orderBy:'scheduled'">
+   <ul class="nav nav-pills">
+       <li ng-class="{active:isSetTab(1)}"><a href ng-click="setTab(1)">Nearby</a></li>
+       <li ng-class="{active:isSetTab(2)}"><a href ng-click="setTab(2)">Favorites</a></li>
+   </ul>
+
+    <br/><input type="search" ng-model="search" placeholder="Enter route id or name..."><br/>
+    <div ng-show="isSetTab(1)">
+      <div ng-repeat="(locID,arrivals) in nearbyStops.arrivals" class='row'>
+       <div class='col-md-4'>
+        <div ng-repeat = "arrival in arrivals | orderBy:'scheduled' | filter:search">
           <h3 ng-if="$index == 0">{{locID}} : {{nearbyStops.locations[locID]}}</h3>
           <span ng-switch on="arrival.status">
 
@@ -42,14 +48,14 @@
             <span class="alert-warning" role="alert">Congestion</span>
           </span>
           </div>
-      </div>
+        </div>
+       </div>
     </div>
 
-
-    <h2>Favorites</h2> 
-    <div ng-repeat="(locID,arrivals) in favStops.arrivals" class='row'>      
+    <div ng-show="isSetTab(2)">
+     <div ng-repeat="(locID,arrivals) in favStops.arrivals" class='row'>      
       <div class='col-md-4'>
-        <div ng-repeat = "arrival in arrivals | orderBy:'scheduled'">
+        <div ng-repeat = "arrival in arrivals | orderBy:'scheduled' | filter:search">
           <h3 ng-if="$index == 0">{{locID}} : {{favStops.locations[locID]}}</h3>          
           <span ng-switch on="arrival.status">
 
@@ -65,8 +71,10 @@
             <span class="alert-warning" role="alert">Congestion</span>
           </span>          
           </div>          
+        </div>
       </div>
-    </div>
+     </div<
+
   </div>
 </body>
 </html>
